@@ -810,7 +810,9 @@ add_newdoc('numpy._core.multiarray', 'array',
         If true (default), then the object is copied.  Otherwise, a copy will
         only be made if ``__array__`` returns a copy, if obj is a nested
         sequence, or if a copy is needed to satisfy any of the other
-        requirements (``dtype``, ``order``, etc.).
+        requirements (``dtype``, ``order``, etc.). Note that any copy made is shallow,
+        which is mainly important for arrays containing Python objects.
+        See Notes from `copy`.
     order : {'K', 'A', 'C', 'F'}, optional
         Specify the memory layout of the array. If object is not an array, the
         newly created array will be in C order (row major) unless 'F' is
@@ -855,6 +857,7 @@ add_newdoc('numpy._core.multiarray', 'array',
     ones : Return a new array setting values to one.
     zeros : Return a new array setting values to zero.
     full : Return a new array of given shape filled with value.
+    copy: Return an array copy of the given object.
 
 
     Notes
@@ -3343,6 +3346,10 @@ add_newdoc('numpy._core.multiarray', 'ndarray', ('copy',
     This function is the preferred method for creating an array copy.  The
     function :func:`numpy.copy` is similar, but it defaults to using order 'K',
     and will not pass sub-classes through by default.
+
+    Note that np.ndarray.copy is a shallow copy and will not copy object elements
+    within arrays. This is mainly important for arrays containing Python objects.
+    See Notes from `copy`.
 
     Examples
     --------
